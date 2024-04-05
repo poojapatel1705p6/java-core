@@ -3,31 +3,31 @@ import java.util.ArrayList;
 import java.util.List;
  
 public class D01P044 {
-
  
-    public static List<List<Integer>> findCombinations(int[] nums, int k) {
-        List<List<Integer>> result = new ArrayList<>();
-        backtrack(result, new ArrayList<>(), nums, k, 0);
-        return result;
-    }
-    private static void backtrack(List<List<Integer>> result, List<Integer> tempList, int[] nums, int k, int start) {
-        if (tempList.size() == k) {
-            result.add(new ArrayList<>(tempList));
+    public static void findCombinations(int[] arr, int k, int start, List<Integer> current, List<List<Integer>> combinations) {
+        if (current.size() == k) {
+            combinations.add(new ArrayList<>(current));
             return;
         }
-        for (int i = start; i < nums.length; i++) {
-            tempList.add(nums[i]);
-            backtrack(result, tempList, nums, k, i + 1);
-            tempList.remove(tempList.size() - 1);
+ 
+        for (int i = start; i < arr.length; i++) {
+            current.add(arr[i]);
+            findCombinations(arr, k, i + 1, current, combinations);
+            current.remove(current.size() - 1); // Backtrack
         }
     }
+ 
     public static void main(String[] args) {
-        int[] nums = {1, 2, 3};
-        int k = 2;
-        List<List<Integer>> combinations = findCombinations(nums, k);
+    	 int k = 2;
+        int[] arr = {1, 2, 3};
+       
+        List<List<Integer>> combinations = new ArrayList<>();
+        findCombinations(arr, k, 0, new ArrayList<>(), combinations);
+ 
+        System.out.println("Combinations:");
         for (List<Integer> combination : combinations) {
             System.out.println(combination);
         }
     }
- 
 }
+          
